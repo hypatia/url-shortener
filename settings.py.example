@@ -1,4 +1,4 @@
-# Django settings for urlweb project.
+# Django settings for url-shortener project.
 import os, logging
 #from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
 
@@ -76,7 +76,7 @@ MIDDLEWARE_CLASSES = (
 #    'django.middleware.transaction.TransactionMiddleware',    
 )
 
-ROOT_URLCONF = 'urlweb.urls'
+ROOT_URLCONF = 'url-shortener.urls'
 
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_PATH, 'templates')    
@@ -88,7 +88,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.admin',
-    'urlweb.shortener',
+    'url-shortener.shortener',
 )
 
 STATIC_DOC_ROOT = os.path.join(PROJECT_PATH, 'static')
@@ -100,4 +100,8 @@ LOGIN_REDIRECT_URL = '/'
 
 SITE_NAME = 'localhost:8000'
 SITE_BASE_URL = 'http://' + SITE_NAME + '/'
+
+# options for public shorteners
+
 REQUIRE_LOGIN = True
+LOG_HITS = False

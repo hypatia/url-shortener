@@ -11,7 +11,7 @@ urlpatterns = patterns(
     (r'^submit/$', 'shortener.views.submit'),
     (r'^(?P<base62_id>\w+)$', 'shortener.views.follow'),
     (r'^info/(?P<base62_id>\w+)$', 'shortener.views.info'),    
-
+    (r'^i/(?P<base62_id>\w+)$', 'shortener.views.info'),
     (r'^static/(?P<path>.*)$', 'django.views.static.serve',
       {'document_root': settings.STATIC_DOC_ROOT}),
 )
