@@ -4,5 +4,5 @@
 .svn
 svn-commit.tmp
 svn-prop.tmp
-blueprint
+static
 settings.py
