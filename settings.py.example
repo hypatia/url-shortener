@@ -104,4 +104,5 @@ SITE_BASE_URL = 'http://' + SITE_NAME + '/'
 # options for public shorteners
 
 REQUIRE_LOGIN = True
+SHOW_STATS = False
 LOG_HITS = False

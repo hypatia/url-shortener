@@ -21,7 +21,8 @@ def follow(request, base62_id):
     """
     key = base62.to_decimal(base62_id)
     link = get_object_or_404(Link, pk = key)
-    link.usage_count += 1
+    if settings.LOG_HITS:
+        link.usage_count += 1
     link.save()
     return HttpResponsePermanentRedirect(link.url)
 
@@ -91,11 +92,12 @@ def submit(request):
 
 def index(request):
     """
-    View for main page (lists recent and popular links)
+    View for main page (lists recent and popular links if SHOW_STATS is True)
     """
     values = default_values(request)
-    values['recent_links'] = Link.objects.all().order_by('-date_submitted')[0:10]
-    values['most_popular_links'] = Link.objects.all().order_by('-usage_count')[0:10]
+    if settings.SHOW_STATS:
+        values['recent_links'] = Link.objects.all().order_by('-date_submitted')[0:10]
+        values['most_popular_links'] = Link.objects.all().order_by('-usage_count')[0:10]
     return render_to_response(
         'shortener/index.html',
         values,
