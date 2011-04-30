@@ -41,7 +41,7 @@ class Link(models.Model):
     1
 
     """
-    url = models.URLField(verify_exists=True, unique=True)
+    url = models.URLField(unique=True)
     date_submitted = models.DateTimeField(default=datetime.datetime.now())
     usage_count = models.IntegerField(default=0)
 
@@ -53,6 +53,16 @@ class Link(models.Model):
     
     def __unicode__(self):
         return self.to_base62() + ' : ' + self.url
+
+class EncryptedLink(models.Model):
+    encrypted_url = models.TextField()
+
+    def to_base62(self):
+        return base62.from_decimal(self.id)
+
+    def short_url(self):
+        return settings.SITE_BASE_URL + self.to_base62()
+
 
 class LinkSubmitForm(forms.Form):
     u = forms.URLField(verify_exists=True,
