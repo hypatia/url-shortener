@@ -26,6 +26,18 @@ def follow(request, base62_id):
     link.save()
     return HttpResponsePermanentRedirect(link.url)
 
+def enc_follow(request, base62_id):
+    """ 
+    View which gets the encrypted blob for the given base62_id value
+    and redirects to it.
+    """
+    key = base62.to_decimal(base62_id)
+    link = get_object_or_404(Link, pk = key)
+    if settings.LOG_HITS:
+        link.usage_count += 1
+    link.save()
+    return HttpResponsePermanentRedirect(link.url)
+
 def default_values(request, link_form=None):
     """ 
     Return a new object with the default values that are typically
