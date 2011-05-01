@@ -65,6 +65,7 @@ class EncryptedLink(models.Model):
 
 
 class LinkSubmitForm(forms.Form):
-    u = forms.URLField(verify_exists=True,
-                       label='URL to be shortened:',
-                       )
+    u = forms.URLField(label='URL to be shortened:',)
+
+class EncryptedLinkSubmitForm(forms.Form):
+    blob = forms.CharField(label='Encrypted URL:',)
