@@ -12,7 +12,7 @@ from django.db import transaction
 from django.conf import settings
 
 from shortener.baseconv import base62
-from shortener.models import Link, LinkSubmitForm
+from shortener.models import Link, EncryptedLink, LinkSubmitForm
 
 def follow(request, base62_id):
     """ 
@@ -35,6 +35,7 @@ def default_values(request, link_form=None):
         link_form = LinkSubmitForm()
     allowed_to_submit = is_allowed_to_submit(request)
     return { 'show_bookmarklet': allowed_to_submit,
+             'show_enc_bookmarklet': allowed_to_submit,
              'show_url_form': allowed_to_submit,
              'site_name': settings.SITE_NAME,
              'site_base_url': settings.SITE_BASE_URL,
@@ -60,7 +61,7 @@ def submit(request):
     """
     if settings.REQUIRE_LOGIN and not request.user.is_authenticated():
         # TODO redirect to an error page
-        raise Http404
+        raise Http403
     url = None
     link_form = None
     if request.GET:
