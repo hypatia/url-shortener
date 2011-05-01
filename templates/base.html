@@ -9,7 +9,7 @@
           type="text/css" media="screen, projection"/>
 
     <link rel="stylesheet" 
-          href="static/css/blueprint/print.css" type="text/css" media="print"/>
+          href="/static/css/blueprint/print.css" type="text/css" media="print"/>
 
     <!--[if lt IE 8]>
     <link rel="stylesheet" 
@@ -58,6 +58,16 @@
         <br/>
         Bookmarklet (drag this to your bookmarks bar):<br/>
         <a href="javascript:(function(){var a=window,b=document,c=encodeURIComponent;d=a.open(&#39;{{ site_base_url }}submit/?u=&#39;+c(b.location));})();">Shorten with {{ site_name }}</a>
+        {% endblock %}
+        {% endif %}
+        {% if show_enc_bookmarklet %}
+        {% block enc_bookmarklet %}
+        <br/>
+        Bookmarklet with encryption (drag this to your bookmarks bar):<br/>
+        <a href="javascript:(function(){var a=window,b=document,c=encodeURIComponent,p=prompt('Password:  ');
+document.body.appendChild(document.createElement('script')).src='{{ site_base_url }}static/js/gibberish-aes.min.js';
+d=a.open(&#39;{{ site_base_url }}enc_submit/?u=&#39;+c(b.location)+p);
+})();">Encrypted shorten with {{ site_name }}</a>
         {% endblock %}
         {% endif %}
       </div>
