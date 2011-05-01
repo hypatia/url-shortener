@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
-{% if settings.SHOW_STATS %}
 {% block content %}
+{% if settings.SHOW_STATS %}
 <h2>Recent Links</h2>
 <ul>
 {% for link in recent_links %}
@@ -17,8 +17,8 @@
 (<a href="{% url shortener.views.info link.to_base62 %}">Info</a>)</li>
 {% endfor %}
 </ul>
-{% endblock %}
 {% endif %}
+{% endblock %}
 
 {% block extra_body %}
 <script>
