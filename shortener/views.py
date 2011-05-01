@@ -12,7 +12,7 @@ from django.db import transaction
 from django.conf import settings
 
 from shortener.baseconv import base62
-from shortener.models import Link, EncryptedLink, LinkSubmitForm
+from shortener.models import Link, EncryptedLink, LinkSubmitForm, EncryptedLinkSubmitForm
 
 def follow(request, base62_id):
     """ 
@@ -90,6 +90,37 @@ def submit(request):
         'shortener/submit_failed.html',
         values,
         context_instance=RequestContext(request))
+
+def enc_submit(request):
+    """
+    View for submitting an encrypted URL
+    """
+    if settings.REQUIRE_LOGIN and not request.user.is_authenticated():
+        # TODO redirect to an error page
+        raise Http403
+    blob = None
+    encrypted_link_form = None
+    if request.GET:
+        encrypted_link_form = EncryptedLinkSubmitForm(request.GET)
+    elif request.POST:
+        encrypted_link_form = EncryptedLinkSubmitForm(request.POST)
+    if encrypted_link_form and encrypted_link_form.is_valid():
+        blob = encrypted_link_form.cleaned_data['blob']
+        print blob
+        new_blob = EncryptedLink(encrypted_url = blob)
+        new_blob.save()
+        values = default_values(request)
+        values['encrypted_link'] = blob
+        return render_to_response(
+            'shortener/submit_success.html',
+            values,
+            context_instance=RequestContext(request))
+    values = default_values(request, link_form=encrypted_link_form)
+    return render_to_response(
+        'shortener/submit_failed.html',
+        values,
+        context_instance=RequestContext(request))
+
 
 def index(request):
     """
