@@ -9,6 +9,7 @@ urlpatterns = patterns(
     (r'^$', 'shortener.views.index'),    
     (r'^admin/(.*)', admin.site.root),    
     (r'^submit/$', 'shortener.views.submit'),
+    (r'^enc_submit/$', 'shortener.views.enc_submit'),
     (r'^(?P<base62_id>\w+)$', 'shortener.views.follow'),
     (r'^info/(?P<base62_id>\w+)$', 'shortener.views.info'),    
     (r'^i/(?P<base62_id>\w+)$', 'shortener.views.info'),
